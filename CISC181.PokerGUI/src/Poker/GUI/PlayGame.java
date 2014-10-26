@@ -189,6 +189,10 @@ public class PlayGame {
 				h.EvalHand();
 				p.SetHand(h);
 			}
+			
+			for (Player p: players){
+				
+			}
 
 			// Player has the hand, call the playerUpdated method to set the
 			// screen

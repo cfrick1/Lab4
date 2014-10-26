@@ -67,6 +67,10 @@ public class PlayerPanel extends JPanel implements ActionListener {
 	private JLabel lblHand;
 
 	private JLabel[] cardLabels;
+	
+	private JButton[] removeButtons;
+	
+	
 
 //	private JButton btnDiscard = new JButton();
 //	private JButton btnJoin = new JButton();
@@ -97,7 +101,7 @@ public class PlayerPanel extends JPanel implements ActionListener {
 		lblHand = new MyLabel();
 
 		lblWinner = new MyLabel();
-
+		
 		gc.gridx = 0;
 		gc.gridy = 1;
 		gc.gridwidth = 1;
@@ -110,8 +114,8 @@ public class PlayerPanel extends JPanel implements ActionListener {
 		nameLabel.setText(plr.GetPlayerName());
 		add(nameLabel, gc);
 
-		gc.gridx = 0;
-		gc.gridy = 2;
+		gc.gridx = 1;
+		gc.gridy = 1;
 		gc.gridwidth = 1;
 		gc.gridheight = 1;
 		gc.weightx = 1.0;
@@ -120,7 +124,7 @@ public class PlayerPanel extends JPanel implements ActionListener {
 		gc.fill = GridBagConstraints.HORIZONTAL;
 		add(lblHand, gc);
 
-		gc.gridx = 1;
+		gc.gridx = 2;
 		gc.gridy = 1;
 		gc.gridwidth = 1;
 		gc.gridheight = 1;
@@ -130,11 +134,13 @@ public class PlayerPanel extends JPanel implements ActionListener {
 		gc.fill = GridBagConstraints.HORIZONTAL;
 		add(lblWinner, gc);
 		
-
 		cardLabels = new JLabel[5];
+		removeButtons = new JButton[5];
 
 		for (int i = 0; i < 5; i++) {
 			cardLabels[i] = new JLabel(ResourceManager.getIcon("/img/card_placeholder.png"));
+			removeButtons[i] = new JButton();
+			removeButtons[i].setText("Remove");
 			gc.gridx = i;
 			gc.gridy = 3;
 			gc.gridwidth = 1;
@@ -144,6 +150,10 @@ public class PlayerPanel extends JPanel implements ActionListener {
 			gc.anchor = GridBagConstraints.CENTER;
 			gc.fill = GridBagConstraints.NONE;
 			add(cardLabels[i], gc);
+			gc.gridy = 2;
+			add(removeButtons[i], gc);
+			removeButtons[i].setVisible(false);
+		
 		}
 
 //		gc.gridx = 0;
@@ -243,7 +253,9 @@ public class PlayerPanel extends JPanel implements ActionListener {
 			
 	}
 	
-	
+	public JButton[] getremoveButtons(){
+		return removeButtons;
+	}
 	
 	
 	

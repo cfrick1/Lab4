@@ -45,42 +45,24 @@ public class BoardPanel extends JPanel {
 		setLayout(new GridBagLayout());
 		GridBagConstraints gc = new GridBagConstraints();
 
-		if (rle.GetCommunityCardsCount() == 5 ) {
-
-			// The five card positions.
-			cardLabels = new JLabel[NO_OF_CARDS];
-			for (int i = 0; i < 5; i++) {
-				cardLabels[i] = new JLabel(
-						ResourceManager.getIcon("/img/card_placeholder.png"));
-				gc.gridx = i;
-				gc.gridy = 2;
-				gc.gridwidth = 1;
-				gc.gridheight = 1;
-				gc.anchor = GridBagConstraints.CENTER;
-				gc.fill = GridBagConstraints.NONE;
-				gc.weightx = 0.0;
-				gc.weighty = 0.0;
-				gc.insets = new Insets(5, 1, 5, 1);
-				add(cardLabels[i], gc);
-			}
+		
+		cardLabels = new JLabel[NO_OF_CARDS];
+		for (int i = 0; i < 5; i++) {
+			cardLabels[i] = new JLabel(
+					ResourceManager.getIcon("/img/card_placeholder.png"));
+			gc.gridx = i;
+			gc.gridy = 2;
+			gc.gridwidth = 1;
+			gc.gridheight = 1;
+			gc.anchor = GridBagConstraints.CENTER;
+			gc.fill = GridBagConstraints.NONE;
+			gc.weightx = 0.0;
+			gc.weighty = 0.0;
+			gc.insets = new Insets(5, 1, 5, 1);
+			add(cardLabels[i], gc);
+			cardLabels[i].setVisible(false);
 		}
-		else {
-			cardLabels = new JLabel[NO_OF_CARDS];
-			for (int i = 0; i < 5; i++) {
-				cardLabels[i] = new JLabel(
-						ResourceManager.getIcon("/img/card_placeholder.png"));
-				gc.gridx = i;
-				gc.gridy = 2;
-				gc.gridwidth = 1;
-				gc.gridheight = 1;
-				gc.anchor = GridBagConstraints.CENTER;
-				gc.fill = GridBagConstraints.NONE;
-				gc.weightx = 0.0;
-				gc.weighty = 0.0;
-				gc.insets = new Insets(5, 1, 5, 1);
-				add(cardLabels[i], gc);
-			}
-		}
+		
 
 		// Message label.
 		messageLabel = new JLabel();
@@ -120,6 +102,11 @@ public class BoardPanel extends JPanel {
 	/**
 	 * Updates the current hand status.
 	 */
+	
+	public JLabel[] getcardLabels(){
+		return cardLabels;
+	}
+	
 	public void updatePanel(List<Card> cards) {
 		int noOfCards = (cards == null) ? 0 : cards.size();
 		for (int i = 0; i < NO_OF_CARDS; i++) {

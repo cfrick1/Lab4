@@ -89,6 +89,8 @@ public class Main extends JFrame implements Client {
 			public void actionPerformed(ActionEvent arg0) {
 				RuleType = eGame.FiveStud;
 				rle = new Rule(eGame.FiveStud);
+				for (int i = 0; i < 5; i++)
+					boardPanel.getcardLabels()[i].setVisible(false);	
 				pGame = new PlayGame(eGame.FiveStud);
 				for (Player p: players.values()){
 					pGame.AddPlayer(p);
@@ -103,6 +105,8 @@ public class Main extends JFrame implements Client {
 			public void actionPerformed(ActionEvent arg0) {
 				RuleType = eGame.FiveStudTwoJoker;
 				rle = new Rule(eGame.FiveStudTwoJoker);
+				for (int i = 0; i < 5; i++)
+					boardPanel.getcardLabels()[i].setVisible(false);
 				pGame = new PlayGame(eGame.FiveStudTwoJoker);
 				for (Player p: players.values()){
 					pGame.AddPlayer(p);
@@ -117,6 +121,8 @@ public class Main extends JFrame implements Client {
 			public void actionPerformed(ActionEvent arg0) {
 				RuleType = eGame.DeucesWild;
 				rle = new Rule(eGame.DeucesWild);
+				for (int i = 0; i < 5; i++)
+					boardPanel.getcardLabels()[i].setVisible(false);
 				pGame = new PlayGame(eGame.DeucesWild);
 				for (Player p: players.values()){
 					pGame.AddPlayer(p);
@@ -131,11 +137,21 @@ public class Main extends JFrame implements Client {
 			public void actionPerformed(ActionEvent arg0) {
 				RuleType = eGame.FiveDraw;
 				rle = new Rule(eGame.FiveDraw);
+				for (int i = 0; i < 5; i++)
+					boardPanel.getcardLabels()[i].setVisible(false);
+				for (PlayerPanel p: playerPanels.values()){
+					for (int i = 0; i < 5; i++)
+						p.getremoveButtons()[i].setVisible(true);
+				}
 				pGame = new PlayGame(eGame.FiveDraw);
 				for (Player p: players.values()){
 					pGame.AddPlayer(p);
 				}
 				pGame.run();
+				for (PlayerPanel p: playerPanels.values()){
+					for (int i = 0; i < 5; i++)
+						p.getremoveButtons()[i].setVisible(false);
+				}
 			}
 		});
 		mnGame.add(rdbtnmntm5CardDraw);
@@ -145,6 +161,8 @@ public class Main extends JFrame implements Client {
 			public void actionPerformed(ActionEvent arg0) {
 				RuleType = eGame.SevenDraw;
 				rle = new Rule(eGame.SevenDraw);
+				for (int i = 0; i < 5; i++)
+					boardPanel.getcardLabels()[i].setVisible(false);
 				pGame = new PlayGame(eGame.SevenDraw);
 				for (Player p: players.values()){
 					pGame.AddPlayer(p);
@@ -159,6 +177,8 @@ public class Main extends JFrame implements Client {
 			public void actionPerformed(ActionEvent arg0) {
 				RuleType = eGame.TexasHoldEm;
 				rle = new Rule(eGame.TexasHoldEm);
+				for (int i = 0; i < 5; i++)
+					boardPanel.getcardLabels()[i].setVisible(true);
 				pGame = new PlayGame(eGame.TexasHoldEm);
 				for (Player p: players.values()){
 					pGame.AddPlayer(p);
@@ -173,6 +193,8 @@ public class Main extends JFrame implements Client {
 			public void actionPerformed(ActionEvent arg0) {
 				RuleType = eGame.Omaha;
 				rle = new Rule(eGame.Omaha);
+				for (int i = 0; i < 5; i++)
+					boardPanel.getcardLabels()[i].setVisible(true);
 				pGame = new PlayGame(eGame.Omaha);
 				for (Player p: players.values()){
 					pGame.AddPlayer(p);
