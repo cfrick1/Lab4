@@ -55,6 +55,8 @@ public class ControlPanel extends JPanel  implements ActionListener {
         );
         this.add(btnEnd);
         btnContinue = createActionButton(Action.CONTINUE);
+        this.add(btnContinue);
+        btnContinue.setVisible(false);
         btnLeave= createActionButton(Action.LEAVE);
         btnSit= createActionButton(Action.SIT);
         btnDraw= createActionButton(Action.DRAW);
@@ -71,6 +73,9 @@ public class ControlPanel extends JPanel  implements ActionListener {
 		return btnStart;
 	}
 	
+	public JButton getbtnContinue(){
+		return btnContinue;
+	}
 	public void waitForUserInput() {
         SwingUtilities.invokeLater(new Runnable() {
             @Override

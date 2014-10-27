@@ -117,7 +117,7 @@ public class PlayGame {
 			for (Player p : players) {
 				p.getClient().playerUpdated(p);
 				p.getClient().playerActed(p);
-
+				
 			}
 
 		} break;
@@ -190,17 +190,19 @@ public class PlayGame {
 				p.SetHand(h);
 			}
 			
-			for (Player p: players){
-				
+			// No one has won yet
+			for (Player p : players) {
+				p.setWinner(false);
 			}
-
+			
 			// Player has the hand, call the playerUpdated method to set the
 			// screen
+			
 			for (Player p : players) {
 				p.getClient().playerUpdated(p);
 				p.getClient().playerActed(p);
-
 			}
+			
 
 		} break;
 		

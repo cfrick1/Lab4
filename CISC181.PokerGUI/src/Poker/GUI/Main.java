@@ -1,5 +1,7 @@
 package Poker.GUI;
 
+// Screen Resolution minimum to see whole window: 1350 x 700
+
 import java.util.ArrayList;
 import java.awt.EventQueue;
 import java.awt.Component;
@@ -60,20 +62,24 @@ public class Main extends JFrame implements Client {
 	public static void main(String[] args) {
 		
 		Main window = new Main();
+		
 	}
 
 	/**
 	 * Create the application.
 	 */
 	public Main() {
+		
 		initializeAll();
+		setSize(1350, 700);
 	}
 
 	/**
 	 * Initialize the contents of the frame.
 	 */
 	private void initializeAll() {
-
+		
+		
 		tbl = new Table();
 		RuleType = eGame.FiveStud;
 		rle = new Rule(eGame.FiveStud);
@@ -91,6 +97,11 @@ public class Main extends JFrame implements Client {
 				rle = new Rule(eGame.FiveStud);
 				for (int i = 0; i < 5; i++)
 					boardPanel.getcardLabels()[i].setVisible(false);	
+				for (PlayerPanel p: playerPanels.values()){
+					for (int i = 0; i < 5; i++)
+						p.getremoveButtons()[i].setVisible(false);
+				}
+				controlPanel.getbtnContinue().setVisible(false);
 				pGame = new PlayGame(eGame.FiveStud);
 				for (Player p: players.values()){
 					pGame.AddPlayer(p);
@@ -107,6 +118,11 @@ public class Main extends JFrame implements Client {
 				rle = new Rule(eGame.FiveStudTwoJoker);
 				for (int i = 0; i < 5; i++)
 					boardPanel.getcardLabels()[i].setVisible(false);
+				for (PlayerPanel p: playerPanels.values()){
+					for (int i = 0; i < 5; i++)
+						p.getremoveButtons()[i].setVisible(false);
+				}
+				controlPanel.getbtnContinue().setVisible(false);
 				pGame = new PlayGame(eGame.FiveStudTwoJoker);
 				for (Player p: players.values()){
 					pGame.AddPlayer(p);
@@ -123,6 +139,11 @@ public class Main extends JFrame implements Client {
 				rle = new Rule(eGame.DeucesWild);
 				for (int i = 0; i < 5; i++)
 					boardPanel.getcardLabels()[i].setVisible(false);
+				for (PlayerPanel p: playerPanels.values()){
+					for (int i = 0; i < 5; i++)
+						p.getremoveButtons()[i].setVisible(false);
+				}
+				controlPanel.getbtnContinue().setVisible(false);
 				pGame = new PlayGame(eGame.DeucesWild);
 				for (Player p: players.values()){
 					pGame.AddPlayer(p);
@@ -143,15 +164,13 @@ public class Main extends JFrame implements Client {
 					for (int i = 0; i < 5; i++)
 						p.getremoveButtons()[i].setVisible(true);
 				}
+				controlPanel.getbtnContinue().setVisible(true);
 				pGame = new PlayGame(eGame.FiveDraw);
 				for (Player p: players.values()){
 					pGame.AddPlayer(p);
 				}
 				pGame.run();
-				for (PlayerPanel p: playerPanels.values()){
-					for (int i = 0; i < 5; i++)
-						p.getremoveButtons()[i].setVisible(false);
-				}
+				
 			}
 		});
 		mnGame.add(rdbtnmntm5CardDraw);
@@ -179,6 +198,11 @@ public class Main extends JFrame implements Client {
 				rle = new Rule(eGame.TexasHoldEm);
 				for (int i = 0; i < 5; i++)
 					boardPanel.getcardLabels()[i].setVisible(true);
+				for (PlayerPanel p: playerPanels.values()){
+					for (int i = 0; i < 5; i++)
+						p.getremoveButtons()[i].setVisible(false);
+				}
+				controlPanel.getbtnContinue().setVisible(false);
 				pGame = new PlayGame(eGame.TexasHoldEm);
 				for (Player p: players.values()){
 					pGame.AddPlayer(p);
@@ -195,6 +219,11 @@ public class Main extends JFrame implements Client {
 				rle = new Rule(eGame.Omaha);
 				for (int i = 0; i < 5; i++)
 					boardPanel.getcardLabels()[i].setVisible(true);
+				for (PlayerPanel p: playerPanels.values()){
+					for (int i = 0; i < 5; i++)
+						p.getremoveButtons()[i].setVisible(false);
+				}
+				controlPanel.getbtnContinue().setVisible(false);
 				pGame = new PlayGame(eGame.Omaha);
 				for (Player p: players.values()){
 					pGame.AddPlayer(p);

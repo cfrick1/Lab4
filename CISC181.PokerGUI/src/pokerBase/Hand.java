@@ -54,7 +54,12 @@ public class Hand {
 		}
 		this.CardsInHand.add(c);
 	}
-
+	
+	public void RemoveCardFromHand(int i){
+		if (i< this.CardsInHand.size())
+			this.CardsInHand.remove(i);
+	}
+	
 	public Card GetCardFromHand(int location) {
 		return CardsInHand.get(location);
 	}

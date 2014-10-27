@@ -89,7 +89,7 @@ public class PlayerPanel extends JPanel implements ActionListener {
 	/**
 	 * Create the panel.
 	 */
-	public PlayerPanel(Table tbl, Rule rle, Player plr) {
+	public PlayerPanel(Table tbl, Rule rle, final Player plr) {
 
 		setBorder(BORDER);
 		setBackground(Color.yellow);
@@ -153,9 +153,82 @@ public class PlayerPanel extends JPanel implements ActionListener {
 			gc.gridy = 2;
 			add(removeButtons[i], gc);
 			removeButtons[i].setVisible(false);
-		
+			
 		}
-
+		
+		// Had to do this without loop because otherwise i get the incomprehensible error
+		// "Cannot refer to the non-final local variable i defined in an enclosing scope" 
+		// when inside the addActionListener...-_-
+		
+		// Does not work for unknown reason
+		//for (int i=0; i<5; i++){
+			//removeButtons[i].addActionListener(	
+				//new ActionListener(){
+	        		
+					//public void actionPerformed(ActionEvent e) {
+						//plr.GetHand().RemoveCardFromHand(i);
+						//plr.getClient().playerUpdated(plr);
+						//plr.getClient().playerActed(plr);
+	        		//}
+	        	//}
+				//);
+		//}
+		
+		removeButtons[0].addActionListener(	
+				new ActionListener(){
+	        		
+					public void actionPerformed(ActionEvent e) {
+	        			plr.GetHand().RemoveCardFromHand(0);
+	        			plr.getClient().playerUpdated(plr);
+	    				plr.getClient().playerActed(plr);
+					}
+	        	}
+	    );
+		
+		removeButtons[1].addActionListener(	
+				new ActionListener(){
+	        		
+					public void actionPerformed(ActionEvent e) {
+						plr.GetHand().RemoveCardFromHand(1);
+	        			plr.getClient().playerUpdated(plr);
+	    				plr.getClient().playerActed(plr);
+	        		}
+	        	}
+	    );
+		
+		removeButtons[2].addActionListener(	
+				new ActionListener(){
+	        		
+					public void actionPerformed(ActionEvent e) {
+						plr.GetHand().RemoveCardFromHand(2);
+	        			plr.getClient().playerUpdated(plr);
+	    				plr.getClient().playerActed(plr);
+	        		}
+	        	}
+	    );
+		
+		removeButtons[3].addActionListener(	
+				new ActionListener(){
+	        		
+					public void actionPerformed(ActionEvent e) {
+						plr.GetHand().RemoveCardFromHand(3);
+	        			plr.getClient().playerUpdated(plr);
+	    				plr.getClient().playerActed(plr);
+	        		}
+	        	}
+	    );
+		
+		removeButtons[4].addActionListener(	
+				new ActionListener(){
+	        		
+					public void actionPerformed(ActionEvent e) {
+						plr.GetHand().RemoveCardFromHand(4);
+	        			plr.getClient().playerUpdated(plr);
+	    				plr.getClient().playerActed(plr);
+	        		}
+	        	}
+	    );
+		
 //		gc.gridx = 0;
 //		gc.gridy = 4;
 //		gc.gridwidth = 1;
@@ -250,7 +323,6 @@ public class PlayerPanel extends JPanel implements ActionListener {
 	     else{
 	    	 lblWinner.setText(" ");
 	     }
-			
 	}
 	
 	public JButton[] getremoveButtons(){
