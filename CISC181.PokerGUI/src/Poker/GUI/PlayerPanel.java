@@ -156,7 +156,7 @@ public class PlayerPanel extends JPanel implements ActionListener {
 			
 		}
 		
-		// Had to do this without loop because otherwise i get the incomprehensible error
+		// Had to do this without loop because otherwise I get the incomprehensible error
 		// "Cannot refer to the non-final local variable i defined in an enclosing scope" 
 		// when inside the addActionListener...-_-
 		

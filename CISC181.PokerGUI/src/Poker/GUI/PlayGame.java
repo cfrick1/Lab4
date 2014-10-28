@@ -1,5 +1,10 @@
 package Poker.GUI;
 
+import java.awt.event.ActionEvent;
+
+import javax.swing.SwingUtilities;
+
+import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
@@ -17,7 +22,10 @@ import pokerEnums.eSuit;
 public class PlayGame {
 	private eGame gme;
 	private ArrayList<Player> players = new ArrayList<Player>();
-
+	private ControlPanel controlPanel;
+	private BoardPanel boardPanel;
+	private final Object monitor = new Object();
+	
 	public PlayGame(eGame gme) {
 		this.gme = gme;
 	}
@@ -36,7 +44,19 @@ public class PlayGame {
 
 	}
 	
-	public void playHand() {
+	public ControlPanel getControlPanel(){
+		return controlPanel;
+	}
+	
+	public void setControlPanel(ControlPanel controlPanel){
+		this.controlPanel = controlPanel;
+	}
+	
+	public void setBoardPanel(BoardPanel boardPanel){
+		this.boardPanel = boardPanel;
+	}
+	
+	public synchronized void playHand() {
 		switch (gme) {
 		
 		case FiveStud: {
@@ -148,6 +168,7 @@ public class PlayGame {
 				p.SetHand(h);
 			}
 			
+			// Determine Winner
 			Collections.sort(players, Player.PlayerRank);
 			for (Player p : players) {
 				if (p == players.get(0)){
@@ -170,7 +191,6 @@ public class PlayGame {
 		} break;
 		
 		case FiveDraw: {
-
 			// Set a new deck d
 			Deck d = new Deck(0);
 			
@@ -191,6 +211,7 @@ public class PlayGame {
 			}
 			
 			// No one has won yet
+			
 			for (Player p : players) {
 				p.setWinner(false);
 			}
@@ -203,11 +224,57 @@ public class PlayGame {
 				p.getClient().playerActed(p);
 			}
 			
+			 
+			// Wait for the user to press the continue button...
+			refresh();
+			
+			int x = 0;
+			//while(controlPanel.getContinuePressed() == false){
+			      //try {
+					//Thread.sleep(1000);
+					//x+=1;
+					//System.out.println(x);
+				//} catch (InterruptedException e) {
+					 //TODO Auto-generated catch block
+					//e.printStackTrace();
+				//}  
+			//}
+					
+			
+			// While Each player has less than 5 cards, keep adding card to hand and evaluating.
+			for (Player p : players) {
+				for (int i = p.GetHand().getCards().size(); i < 5; i++) {
+					Card c = d.drawFromDeck();
+					p.GetHand().AddCardToHand(c);
+				}
+				p.GetHand().EvalHand();
+				
+			}
+			
+			// Determine Winner
+			Collections.sort(players, Player.PlayerRank);
+			for (Player p : players) {
+				if (p == players.get(0)){
+					p.setWinner(true);
+				}
+				else{
+					p.setWinner(false);
+				}
+			
+			}
+			
+			// Player has the hand, call the playerUpdated method to set the
+			// screen
+			for (Player p : players) {
+				p.getClient().playerUpdated(p);
+				p.getClient().playerActed(p);
+			}
 
 		} break;
 		
 		case TexasHoldEm: {
-
+			
+			
 			// Set a new deck d
 			Deck d = new Deck(0);
 			
@@ -227,10 +294,52 @@ public class PlayGame {
 			}
 			
 			//Create a community
-			Hand community = new Hand();
+			List<Card> community = new ArrayList<Card>();
 			for (int i = 0; i < 5; i++) {
 				Card c = d.drawFromDeck();
-				community.AddCardToHand(c);
+				community.add(c);
+			}
+			
+			for (Player p : players) {
+				List<Card> combo = new ArrayList<Card>();
+				combo.addAll(p.GetHand().getCards());
+				combo.addAll(community);
+				List<Hand> possible = new ArrayList<Hand>();
+				
+				for (int v = 0; v < combo.size()-4; v++) {
+					for (int w = v+1; w < combo.size()-3; w++) {
+						for (int x = w + 1; x < combo.size()-2; x++) {
+							for (int y = x + 1; y < combo.size()-1; y++) {
+								for (int z = y + 1; z < combo.size(); z++) {
+									Hand thisHand = new Hand();
+									thisHand.AddCardToHand(combo.get(v));
+									thisHand.AddCardToHand(combo.get(w));
+									thisHand.AddCardToHand(combo.get(x));
+									thisHand.AddCardToHand(combo.get(y));
+									thisHand.AddCardToHand(combo.get(z));
+									thisHand.EvalHand();
+									possible.add(thisHand);
+								}
+							}
+						}
+					}
+				}
+				Collections.sort(possible, Hand.HandRank);
+				p.GetHand().ScoreHand(possible.get(0).getHandStrength(), possible.get(0).getHighPairStrength(),
+										possible.get(0).getLowPairStrength(), possible.get(0).getKicker());
+			}
+				
+			
+			Collections.sort(players, Player.PlayerRank);
+			
+			for (Player p : players) {
+				if (p == players.get(0)){
+					p.setWinner(true);
+				}
+				else{
+					p.setWinner(false);
+				}
+			
 			}
 			
 			// Player has the hand, call the playerUpdated method to set the
@@ -240,10 +349,12 @@ public class PlayGame {
 				p.getClient().playerActed(p);
 			}
 			
+			boardPanel.updatePanel(community);
 		} break;
 		
 		case Omaha: {
 
+			
 			// Set a new deck d
 			Deck d = new Deck(0);
 			
@@ -263,12 +374,51 @@ public class PlayGame {
 			}
 			
 			//Create a community
-			Hand community = new Hand();
+			List<Card> community = new ArrayList<Card>();
 			for (int i = 0; i < 5; i++) {
 				Card c = d.drawFromDeck();
-				community.AddCardToHand(c);
+				community.add(c);
 			}
 				
+			for (Player p : players) {
+				List<Card> combo = new ArrayList<Card>();
+				combo.addAll(p.GetHand().getCards());
+				combo.addAll(community);
+				List<Hand> possible = new ArrayList<Hand>();
+				for (int v = 0; v < combo.size()-4; v++) {
+					for (int w = v+1; w < combo.size()-3; w++) {
+						for (int x = w + 1; x < combo.size()-2; x++) {
+							for (int y = x + 1; y < combo.size()-1; y++) {
+								for (int z = y + 1; z < combo.size(); z++) {
+									Hand thisHand = new Hand();
+									thisHand.AddCardToHand(combo.get(v));
+									thisHand.AddCardToHand(combo.get(w));
+									thisHand.AddCardToHand(combo.get(x));
+									thisHand.AddCardToHand(combo.get(y));
+									thisHand.AddCardToHand(combo.get(z));
+									thisHand.EvalHand();
+									possible.add(thisHand);
+								}
+							}
+						}
+					}
+				}
+				Collections.sort(possible, Hand.HandRank);
+				p.GetHand().ScoreHand(possible.get(0).getHandStrength(), possible.get(0).getHighPairStrength(),
+										possible.get(0).getLowPairStrength(), possible.get(0).getKicker());
+			}
+			
+			Collections.sort(players, Player.PlayerRank);
+			
+			for (Player p : players) {
+				if (p == players.get(0)){
+					p.setWinner(true);
+				}
+				else{
+					p.setWinner(false);
+				}
+			
+			}
 			
 			// Player has the hand, call the playerUpdated method to set the
 			// screen
@@ -277,10 +427,26 @@ public class PlayGame {
 				p.getClient().playerActed(p);
 
 			}
-
+			
+			boardPanel.updatePanel(community);
 		} break;
 		
 		}
 		
 	}
+	
+	public void refresh() {
+        SwingUtilities.invokeLater(new Runnable() {
+            @Override
+            public void run() {
+            	try {
+					Thread.sleep(1000);
+				} catch (InterruptedException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+            }
+        });
+    }
+
 }

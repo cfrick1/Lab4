@@ -166,6 +166,7 @@ public class Main extends JFrame implements Client {
 				}
 				controlPanel.getbtnContinue().setVisible(true);
 				pGame = new PlayGame(eGame.FiveDraw);
+				pGame.setControlPanel(controlPanel);
 				for (Player p: players.values()){
 					pGame.AddPlayer(p);
 				}
@@ -204,6 +205,7 @@ public class Main extends JFrame implements Client {
 				}
 				controlPanel.getbtnContinue().setVisible(false);
 				pGame = new PlayGame(eGame.TexasHoldEm);
+				pGame.setBoardPanel(boardPanel);
 				for (Player p: players.values()){
 					pGame.AddPlayer(p);
 				}
@@ -225,6 +227,7 @@ public class Main extends JFrame implements Client {
 				}
 				controlPanel.getbtnContinue().setVisible(false);
 				pGame = new PlayGame(eGame.Omaha);
+				pGame.setBoardPanel(boardPanel);
 				for (Player p: players.values()){
 					pGame.AddPlayer(p);
 				}
@@ -261,6 +264,8 @@ public class Main extends JFrame implements Client {
 	        		}
 	        	}
 	    );
+		
+		
 		boardPanel = new BoardPanel(controlPanel, rle);
 		addComponent(boardPanel, 1, 1, 1, 1);
 		
@@ -373,8 +378,10 @@ public class Main extends JFrame implements Client {
 
 	@Override
 	public void boardUpdated(List<Card> cards) {
-		// TODO Auto-generated method stub
-		
+		System.out.println("BoardUpdated in Main");
+		if (boardPanel != null){
+			boardPanel.updatePanel(cards);
+		}
 	}
 
 	@Override

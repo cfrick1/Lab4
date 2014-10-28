@@ -24,6 +24,7 @@ public class ControlPanel extends JPanel  implements ActionListener {
 	private final JButton btnStart;
 	private final JButton btnEnd;
 	private final JButton btnContinue;
+	private boolean ContinuePressed = false;
 	private final JButton btnLeave;
 	private final JButton btnSit;
 	private final JButton btnDraw;
@@ -55,6 +56,14 @@ public class ControlPanel extends JPanel  implements ActionListener {
         );
         this.add(btnEnd);
         btnContinue = createActionButton(Action.CONTINUE);
+        btnContinue.addActionListener(
+				new ActionListener(){
+	            	public void actionPerformed(ActionEvent e) {
+	            		ContinuePressed = true;
+	            	}
+	            }
+	        );
+		
         this.add(btnContinue);
         btnContinue.setVisible(false);
         btnLeave= createActionButton(Action.LEAVE);
@@ -76,6 +85,11 @@ public class ControlPanel extends JPanel  implements ActionListener {
 	public JButton getbtnContinue(){
 		return btnContinue;
 	}
+	
+	public boolean getContinuePressed(){
+		return ContinuePressed;
+	}
+	
 	public void waitForUserInput() {
         SwingUtilities.invokeLater(new Runnable() {
             @Override
@@ -85,9 +99,6 @@ public class ControlPanel extends JPanel  implements ActionListener {
                 repaint();
             }
         });
-        Set<Action> allowedActions = new HashSet<Action>();
-        allowedActions.add(Action.CONTINUE);
-        getUserInput(allowedActions);
     }
     
     @Override

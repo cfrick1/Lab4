@@ -156,15 +156,16 @@ public class Hand {
 	public void setBestHand(ArrayList<Card> BestHand) {
 		this.BestCardsInHand = BestHand;
 	}
-
+	
+	// public String getHandStrengthText()
+		// {
+		// eHandStrength eHS;
+		// }
 	public int getHandStrength() {
 		return HandStrength;
 	}
 
-	// public String getHandStrengthText()
-	// {
-	// eHandStrength eHS;
-	// }
+	
 
 	public int getNatural() {
 		return Natural;
@@ -468,6 +469,19 @@ public class Hand {
 
 	private void ScoreHand(eHandStrength hST, int HiHand, int LoHand, int Kicker) {
 		this.HandStrength = hST.getHandStrength();
+		this.HiHand = HiHand;
+		this.LoHand = LoHand;
+		this.Kicker = Kicker;
+		this.bScored = true;
+
+	}
+	
+	// I'm using this for Omaha and Texas Hold'em. I don't want to have to set a players hand
+	// in order to be able to score it, otherwise the entire hand would update
+	// in the player panel to those five cards...
+	
+	public void ScoreHand(int hST, int HiHand, int LoHand, int Kicker) {
+		this.HandStrength = hST;
 		this.HiHand = HiHand;
 		this.LoHand = LoHand;
 		this.Kicker = Kicker;
