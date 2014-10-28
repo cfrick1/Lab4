@@ -504,11 +504,6 @@ public class Hand {
 				return result;
 			}
 
-			result = h2.getNatural() - h1.getNatural();
-			if (result != 0) {
-				return result;
-			}
-
 			result = h2.getHighPairStrength() - h1.getHighPairStrength();
 			if (result != 0) {
 				return result;
@@ -523,7 +518,12 @@ public class Hand {
 			if (result != 0) {
 				return result;
 			}
-
+			
+			result = h2.getNatural() - h1.getNatural();
+			if (result != 0) {
+				return result;
+			}
+			
 			return 0;
 		}
 	};
