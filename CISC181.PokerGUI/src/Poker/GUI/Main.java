@@ -98,8 +98,15 @@ public class Main extends JFrame implements Client {
 				for (int i = 0; i < 5; i++)
 					boardPanel.getcardLabels()[i].setVisible(false);	
 				for (PlayerPanel p: playerPanels.values()){
-					for (int i = 0; i < 5; i++)
+					for (int i = 0; i < 7; i++){
 						p.getremoveButtons()[i].setVisible(false);
+						if(i>4){
+							p.getCardLabels()[i].setVisible(false);
+						}
+						else{
+							p.getCardLabels()[i].setVisible(true);
+						}
+					}
 				}
 				controlPanel.getbtnContinue().setVisible(false);
 				pGame = new PlayGame(eGame.FiveStud);
@@ -119,8 +126,15 @@ public class Main extends JFrame implements Client {
 				for (int i = 0; i < 5; i++)
 					boardPanel.getcardLabels()[i].setVisible(false);
 				for (PlayerPanel p: playerPanels.values()){
-					for (int i = 0; i < 5; i++)
+					for (int i = 0; i < 7; i++){
 						p.getremoveButtons()[i].setVisible(false);
+						if(i>4){
+							p.getCardLabels()[i].setVisible(false);
+						}
+						else{
+							p.getCardLabels()[i].setVisible(true);
+						}
+					}
 				}
 				controlPanel.getbtnContinue().setVisible(false);
 				pGame = new PlayGame(eGame.FiveStudTwoJoker);
@@ -140,8 +154,15 @@ public class Main extends JFrame implements Client {
 				for (int i = 0; i < 5; i++)
 					boardPanel.getcardLabels()[i].setVisible(false);
 				for (PlayerPanel p: playerPanels.values()){
-					for (int i = 0; i < 5; i++)
+					for (int i = 0; i < 7; i++){
 						p.getremoveButtons()[i].setVisible(false);
+						if(i>4){
+							p.getCardLabels()[i].setVisible(false);
+						}
+						else{
+							p.getCardLabels()[i].setVisible(true);
+						}
+					}
 				}
 				controlPanel.getbtnContinue().setVisible(false);
 				pGame = new PlayGame(eGame.DeucesWild);
@@ -161,8 +182,19 @@ public class Main extends JFrame implements Client {
 				for (int i = 0; i < 5; i++)
 					boardPanel.getcardLabels()[i].setVisible(false);
 				for (PlayerPanel p: playerPanels.values()){
-					for (int i = 0; i < 5; i++)
-						p.getremoveButtons()[i].setVisible(true);
+					for (int i = 0; i < 7; i++){
+						if (i<5){
+							p.getremoveButtons()[i].setVisible(true);
+						}
+						
+						if(i>4){
+							p.getCardLabels()[i].setVisible(false);
+							p.getremoveButtons()[i].setVisible(false);
+						}
+						else{
+							p.getCardLabels()[i].setVisible(true);
+						}
+					}
 				}
 				controlPanel.getbtnContinue().setVisible(true);
 				pGame = new PlayGame(eGame.FiveDraw);
@@ -183,6 +215,12 @@ public class Main extends JFrame implements Client {
 				rle = new Rule(eGame.SevenDraw);
 				for (int i = 0; i < 5; i++)
 					boardPanel.getcardLabels()[i].setVisible(false);
+				for (PlayerPanel p: playerPanels.values()){
+					for (int i = 0; i < 7; i++){
+						p.getCardLabels()[i].setVisible(true);
+						p.getremoveButtons()[i].setVisible(true);	
+					}
+				}
 				pGame = new PlayGame(eGame.SevenDraw);
 				for (Player p: players.values()){
 					pGame.AddPlayer(p);
@@ -200,8 +238,15 @@ public class Main extends JFrame implements Client {
 				for (int i = 0; i < 5; i++)
 					boardPanel.getcardLabels()[i].setVisible(true);
 				for (PlayerPanel p: playerPanels.values()){
-					for (int i = 0; i < 5; i++)
+					for (int i = 0; i < 7; i++){
 						p.getremoveButtons()[i].setVisible(false);
+						if(i>1){
+							p.getCardLabels()[i].setVisible(false);
+						}
+						else{
+							p.getCardLabels()[i].setVisible(true);
+						}
+					}
 				}
 				controlPanel.getbtnContinue().setVisible(false);
 				pGame = new PlayGame(eGame.TexasHoldEm);
@@ -222,8 +267,15 @@ public class Main extends JFrame implements Client {
 				for (int i = 0; i < 5; i++)
 					boardPanel.getcardLabels()[i].setVisible(true);
 				for (PlayerPanel p: playerPanels.values()){
-					for (int i = 0; i < 5; i++)
+					for (int i = 0; i < 7; i++){
 						p.getremoveButtons()[i].setVisible(false);
+						if(i>3){
+							p.getCardLabels()[i].setVisible(false);
+						}
+						else{
+							p.getCardLabels()[i].setVisible(true);
+						}
+					}
 				}
 				controlPanel.getbtnContinue().setVisible(false);
 				pGame = new PlayGame(eGame.Omaha);

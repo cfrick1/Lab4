@@ -134,13 +134,17 @@ public class PlayerPanel extends JPanel implements ActionListener {
 		gc.fill = GridBagConstraints.HORIZONTAL;
 		add(lblWinner, gc);
 		
-		cardLabels = new JLabel[5];
-		removeButtons = new JButton[5];
+		cardLabels = new JLabel[7];
+		removeButtons = new JButton[7];
 
-		for (int i = 0; i < 5; i++) {
+		for (int i = 0; i < 7; i++) {
 			cardLabels[i] = new JLabel(ResourceManager.getIcon("/img/card_placeholder.png"));
+			if (i>4){
+				cardLabels[i].setVisible(false);
+			}
 			removeButtons[i] = new JButton();
-			removeButtons[i].setText("Remove");
+			removeButtons[i].setSize(70, 30);
+			removeButtons[i].setText("Toss");
 			gc.gridx = i;
 			gc.gridy = 3;
 			gc.gridwidth = 1;
@@ -161,7 +165,7 @@ public class PlayerPanel extends JPanel implements ActionListener {
 		// when inside the addActionListener...-_-
 		
 		// Does not work for unknown reason
-		//for (int i=0; i<5; i++){
+		//for (int i=0; i<7; i++){
 			//removeButtons[i].addActionListener(	
 				//new ActionListener(){
 	        		
@@ -229,6 +233,28 @@ public class PlayerPanel extends JPanel implements ActionListener {
 	        	}
 	    );
 		
+		removeButtons[5].addActionListener(	
+				new ActionListener(){
+	        		
+					public void actionPerformed(ActionEvent e) {
+						plr.GetHand().RemoveCardFromHand(5);
+	        			plr.getClient().playerUpdated(plr);
+	    				plr.getClient().playerActed(plr);
+	        		}
+	        	}
+	    );
+		
+		removeButtons[6].addActionListener(	
+				new ActionListener(){
+	        		
+					public void actionPerformed(ActionEvent e) {
+						plr.GetHand().RemoveCardFromHand(6);
+	        			plr.getClient().playerUpdated(plr);
+	    				plr.getClient().playerActed(plr);
+	        		}
+	        	}
+	    );
+		
 //		gc.gridx = 0;
 //		gc.gridy = 4;
 //		gc.gridwidth = 1;
@@ -283,7 +309,7 @@ public class PlayerPanel extends JPanel implements ActionListener {
 		String label = action.getName();
 		JButton button = new JButton(label);
 		button.setMnemonic(label.charAt(0));
-		button.setSize(100, 30);
+		button.setSize(70, 30);
 		button.addActionListener(this);
 		return button;
 	}
@@ -329,7 +355,9 @@ public class PlayerPanel extends JPanel implements ActionListener {
 		return removeButtons;
 	}
 	
-	
+	public JLabel[] getCardLabels(){
+		return cardLabels;
+	}
 	
 	
 	

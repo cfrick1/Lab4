@@ -272,6 +272,44 @@ public class PlayGame {
 
 		} break;
 		
+		case SevenDraw: {
+			// Set a new deck d
+			Deck d = new Deck(0);
+						
+			// Reset each player's hand
+			for (Player p : players) {
+				p.resetHand();
+			}
+
+			// Create a hand for each player
+			for (Player p : players) {
+				Hand h = new Hand();
+				for (int i = 0; i < 7; i++) {
+					Card c = d.drawFromDeck();
+					h.AddCardToHand(c);
+				}
+				h.EvalHand();
+				p.SetHand(h);
+			}
+						
+			// No one has won yet
+						
+			for (Player p : players) {
+				p.setWinner(false);
+			}
+						
+			// Player has the hand, call the playerUpdated method to set the
+			// screen
+						
+			for (Player p : players) {
+				p.getClient().playerUpdated(p);
+				p.getClient().playerActed(p);
+			}
+						
+			// To Do: Wait for Continue and then Evaluate			 
+				
+		} break;
+		
 		case TexasHoldEm: {
 			
 			
