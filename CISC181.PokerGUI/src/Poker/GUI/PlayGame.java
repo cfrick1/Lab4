@@ -381,21 +381,22 @@ public class PlayGame {
 			}
 				
 			for (Player p : players) {
-				List<Card> combo = new ArrayList<Card>();
-				combo.addAll(p.GetHand().getCards());
-				combo.addAll(community);
+				List<Card> combo1 = new ArrayList<Card>();
+				List<Card> combo2 = new ArrayList<Card>();
+				combo1.addAll(p.GetHand().getCards());
+				combo2.addAll(community);
 				List<Hand> possible = new ArrayList<Hand>();
-				for (int v = 0; v < combo.size()-4; v++) {
-					for (int w = v+1; w < combo.size()-3; w++) {
-						for (int x = w + 1; x < combo.size()-2; x++) {
-							for (int y = x + 1; y < combo.size()-1; y++) {
-								for (int z = y + 1; z < combo.size(); z++) {
+				for (int v = 0; v < combo1.size()-1; v++) {
+					for (int w = v+1; w < combo1.size(); w++) {
+						for (int x = 0; x < combo2.size()-2; x++) {
+							for (int y = x + 1; y < combo2.size()-1; y++) {
+								for (int z = y + 1; z < combo2.size(); z++) {
 									Hand thisHand = new Hand();
-									thisHand.AddCardToHand(combo.get(v));
-									thisHand.AddCardToHand(combo.get(w));
-									thisHand.AddCardToHand(combo.get(x));
-									thisHand.AddCardToHand(combo.get(y));
-									thisHand.AddCardToHand(combo.get(z));
+									thisHand.AddCardToHand(combo1.get(v));
+									thisHand.AddCardToHand(combo1.get(w));
+									thisHand.AddCardToHand(combo2.get(x));
+									thisHand.AddCardToHand(combo2.get(y));
+									thisHand.AddCardToHand(combo2.get(z));
 									thisHand.EvalHand();
 									possible.add(thisHand);
 								}
